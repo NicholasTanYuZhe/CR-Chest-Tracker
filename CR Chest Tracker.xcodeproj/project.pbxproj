@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		C61C01E51E5CA37D00DB7245 /* chestCycle.csv in Resources */ = {isa = PBXBuildFile; fileRef = C61C01E41E5CA37D00DB7245 /* chestCycle.csv */; };
+		C61C01E71E5CB24600DB7245 /* csvparser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C61C01E61E5CB24600DB7245 /* csvparser.swift */; };
 		C6471ACD1E59DA6B001C26B8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6471ACC1E59DA6B001C26B8 /* AppDelegate.swift */; };
 		C6471ACF1E59DA6B001C26B8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6471ACE1E59DA6B001C26B8 /* ViewController.swift */; };
 		C6471AD21E59DA6B001C26B8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C6471AD01E59DA6B001C26B8 /* Main.storyboard */; };
@@ -37,6 +38,7 @@
 
 /* Begin PBXFileReference section */
 		C61C01E41E5CA37D00DB7245 /* chestCycle.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = chestCycle.csv; sourceTree = "<group>"; };
+		C61C01E61E5CB24600DB7245 /* csvparser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = csvparser.swift; sourceTree = "<group>"; };
 		C6471AC91E59DA6B001C26B8 /* CR Chest Tracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CR Chest Tracker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C6471ACC1E59DA6B001C26B8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C6471ACE1E59DA6B001C26B8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -101,6 +103,7 @@
 		C6471ACB1E59DA6B001C26B8 /* CR Chest Tracker */ = {
 			isa = PBXGroup;
 			children = (
+				C61C01E61E5CB24600DB7245 /* csvparser.swift */,
 				C61C01E41E5CA37D00DB7245 /* chestCycle.csv */,
 				C6471ACC1E59DA6B001C26B8 /* AppDelegate.swift */,
 				C6471ACE1E59DA6B001C26B8 /* ViewController.swift */,
@@ -272,6 +275,7 @@
 				C6471AD51E59DA6B001C26B8 /* CR_Chest_Tracker.xcdatamodeld in Sources */,
 				C6471ACF1E59DA6B001C26B8 /* ViewController.swift in Sources */,
 				C6471ACD1E59DA6B001C26B8 /* AppDelegate.swift in Sources */,
+				C61C01E71E5CB24600DB7245 /* csvparser.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
