@@ -11,7 +11,8 @@ import CoreData
 
 class ViewController: UIViewController {
     
-    var managedObjectContext : NSManagedObjectContext!
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    var chests : [Chest] = []
 
     @IBAction func silver(_ sender: AnyObject) {
     }
@@ -49,9 +50,10 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         assignBackground()
-        let appDelegate = (UIApplication.shared.delegate) as! AppDelegate
-        managedObjectContext = appDelegate.persistentContainer.viewContext
-        let chest = Chest(context: managedObjectContext)
+        
+        getData()
+        var chest = chests[158]
+        print("Chest: \(chest.chest!) \nType: \(chest.type!)")
     }
 
     override func didReceiveMemoryWarning() {
@@ -70,7 +72,14 @@ class ViewController: UIViewController {
         view.addSubview(imageView)
         self.view.sendSubview(toBack: imageView)
     }
-
+    
+    func getData() {
+        do {
+            chests = try context.fetch(Chest.fetchRequest())
+        } catch {
+            print("Fetching Failed")
+        }
+    }
 
 }
 

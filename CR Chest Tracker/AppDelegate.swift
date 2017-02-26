@@ -93,13 +93,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func parseCSV() {
         guard let csvPath = Bundle.main.path(forResource: "chestCycle", ofType: "csv") else { return }
         do {
+            let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
             let csvData = try String(contentsOfFile: csvPath, encoding: String.Encoding.utf8)
             let csv = csvData.csvRows()
             
+            var counter = 0
+            
             for row in csv {
-                print(row)
+                if counter != 1 {
+                    counter = counter + 1
+                }
+                else {
+                    let chest = Chest(context: context) // Link Chest & Context
+                    chest.chest = row[0]
+                    chest.type = row[1]
+                    
+                    // Save the data to coredata
+                    (UIApplication.shared.delegate as! AppDelegate).saveContext()
+                }
             }
-        } catch{  
+        } catch{
             print(error)  
         }
     }
