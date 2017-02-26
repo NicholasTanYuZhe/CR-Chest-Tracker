@@ -4,7 +4,13 @@
         <attribute name="chest" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="Cycle" representedClassName="Cycle" syncable="YES" codeGenerationType="class">
+        <attribute name="current" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="legend" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="superMagical" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <elements>
         <element name="Chest" positionX="-63" positionY="-18" width="128" height="75"/>
+        <element name="Cycle" positionX="79" positionY="-18" width="128" height="90"/>
     </elements>
 </model>

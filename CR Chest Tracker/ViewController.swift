@@ -13,6 +13,7 @@ class ViewController: UIViewController {
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     var chests : [Chest] = []
+    var cycles : [Cycle] = []
 
     @IBAction func silver(_ sender: AnyObject) {
     }
@@ -50,13 +51,10 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         self.assignBackground()
-        self.getData()
+        self.getData(entity: "Chest")
         var chest = chests[158]
         print("Chest: \(chest.chest!) \nType: \(chest.type!)")
-        self.deleteAllData()
-        self.getData()
-        chest = chests[0]
-        print("Chest: \(chest.chest!) \nType: \(chest.type!)")
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -76,16 +74,21 @@ class ViewController: UIViewController {
         self.view.sendSubview(toBack: imageView)
     }
     
-    func getData() {
+    func getData(entity:String) {
         do {
-            chests = try context.fetch(Chest.fetchRequest())
+            if entity == "Chest" {
+                chests = try context.fetch(Chest.fetchRequest())
+            }
+            else {
+                cycles = try context.fetch(Cycle.fetchRequest())
+            }
         } catch {
             print("Fetching Failed")
         }
     }
     
-    func deleteAllData(){
-        let delAllReqVar = NSBatchDeleteRequest(fetchRequest: NSFetchRequest<NSFetchRequestResult>(entityName: "Chest"))
+    func deleteAllData(entity:String){
+        let delAllReqVar = NSBatchDeleteRequest(fetchRequest: NSFetchRequest<NSFetchRequestResult>(entityName: entity))
         do {
             try context.execute(delAllReqVar)
         }

@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        parseCSV()
+        parseCSV(file: "chestCycle")
         return true
     }
 
@@ -90,13 +90,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-    func parseCSV() {
-        guard let csvPath = Bundle.main.path(forResource: "chestCycle", ofType: "csv") else { return }
+    func parseCSV(file:String) {
+        guard let csvPath = Bundle.main.path(forResource: file, ofType: "csv") else { return }
         do {
             let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
             let csvData = try String(contentsOfFile: csvPath, encoding: String.Encoding.utf8)
             let csv = csvData.csvRows()
-            
             var counter = 0
             
             for row in csv {
@@ -104,9 +103,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     counter = counter + 1
                 }
                 else {
-                    let chest = Chest(context: context) // Link Chest & Context
-                    chest.chest = row[0]
-                    chest.type = row[1]
+                    if file == "chestCycle" {
+                        let chest = Chest(context: context) // Link Chest & Context
+                        chest.chest = row[0]
+                        chest.type = row[1]
+                    }
+                    else {
+                        let cycle = Cycle(context: context)
+                        cycle.current = row[0]
+                        cycle.legend = row[1]
+                        cycle.superMagical = row[2]
+                    }
+                    
                     
                     // Save the data to coredata
                     (UIApplication.shared.delegate as! AppDelegate).saveContext()
