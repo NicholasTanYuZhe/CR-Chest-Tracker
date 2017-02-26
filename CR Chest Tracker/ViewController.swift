@@ -49,10 +49,13 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        assignBackground()
-        
-        getData()
+        self.assignBackground()
+        self.getData()
         var chest = chests[158]
+        print("Chest: \(chest.chest!) \nType: \(chest.type!)")
+        self.deleteAllData()
+        self.getData()
+        chest = chests[0]
         print("Chest: \(chest.chest!) \nType: \(chest.type!)")
     }
 
@@ -78,6 +81,16 @@ class ViewController: UIViewController {
             chests = try context.fetch(Chest.fetchRequest())
         } catch {
             print("Fetching Failed")
+        }
+    }
+    
+    func deleteAllData(){
+        let delAllReqVar = NSBatchDeleteRequest(fetchRequest: NSFetchRequest<NSFetchRequestResult>(entityName: "Chest"))
+        do {
+            try context.execute(delAllReqVar)
+        }
+        catch {
+            print(error)
         }
     }
 
