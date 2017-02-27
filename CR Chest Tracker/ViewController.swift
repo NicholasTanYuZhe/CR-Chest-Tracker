@@ -131,7 +131,6 @@ class ViewController: UIViewController {
     func prevCycle() {
         var image : UIImage
         cycle = cycles[0]
-        print(cycles.count)
         if cycle.current != "-1" {
             if cycles.count > 0 {
                 for i in 1...4 {
