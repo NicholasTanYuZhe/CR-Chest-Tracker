@@ -17,7 +17,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        parseCSV(file: "chestCycle")
+        self.deleteAllData(entity: "Chest")
+        self.deleteAllData(entity: "Cycle")
+        self.parseCSV(file: "chestCycle")
+        self.parseCSV(file: "currentCycle")
         return true
     }
 
@@ -108,13 +111,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         chest.chest = row[0]
                         chest.type = row[1]
                     }
-                    else {
+                    else if file == "currentCycle" {
                         let cycle = Cycle(context: context)
                         cycle.current = row[0]
-                        cycle.legend = row[1]
-                        cycle.superMagical = row[2]
                     }
-                    
+                    else {
+                        let specialChest = SpecialChest(context: context)
+                        specialChest.superMagical = row[0]
+                        specialChest.legend = row[1]
+                    }
                     
                     // Save the data to coredata
                     (UIApplication.shared.delegate as! AppDelegate).saveContext()
@@ -122,6 +127,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         } catch{
             print(error)  
+        }
+    }
+    
+    func deleteAllData(entity:String){
+        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        let delAllReqVar = NSBatchDeleteRequest(fetchRequest: NSFetchRequest<NSFetchRequestResult>(entityName: entity))
+        do {
+            try context.execute(delAllReqVar)
+        }
+        catch {
+            print(error)
         }
     }
 }

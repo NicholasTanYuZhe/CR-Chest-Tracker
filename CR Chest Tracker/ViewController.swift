@@ -14,6 +14,10 @@ class ViewController: UIViewController {
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     var chests : [Chest] = []
     var cycles : [Cycle] = []
+    var specials : [SpecialChest] = []
+    var chest = Chest()
+    var cycle = Cycle()
+    var special = SpecialChest()
 
     @IBAction func silver(_ sender: AnyObject) {
     }
@@ -28,6 +32,32 @@ class ViewController: UIViewController {
     @IBAction func legend(_ sender: AnyObject) {
     }
     @IBAction func deleteChest(_ sender: AnyObject) {
+        if cycles.count > 0 {
+            let size = cycles.count
+            cycle = cycles[size-1]
+            context.delete(cycle)
+            (UIApplication.shared.delegate as! AppDelegate).saveContext()
+            do {
+                cycles = try context.fetch(Cycle.fetchRequest())
+            } catch {
+                print("Fetching Failed")
+            }
+            if size == 1 {
+                prevChest1.image = #imageLiteral(resourceName: "WoodenChest")
+                prevChest2.image = #imageLiteral(resourceName: "WoodenChest")
+                prevChest3.image = #imageLiteral(resourceName: "WoodenChest")
+                prevChest4.image = #imageLiteral(resourceName: "WoodenChest")
+                chest1.image = #imageLiteral(resourceName: "WoodenChest")
+                chest2.image = #imageLiteral(resourceName: "WoodenChest")
+                chest3.image = #imageLiteral(resourceName: "WoodenChest")
+                chest4.image = #imageLiteral(resourceName: "WoodenChest")
+                chest5.image = #imageLiteral(resourceName: "WoodenChest")
+                chest6.image = #imageLiteral(resourceName: "WoodenChest")
+            }
+            else {
+                self.prevCycle()
+            }
+        }
     }
     @IBOutlet weak var prevChest1: UIImageView!
     @IBOutlet weak var prevChest2: UIImageView!
@@ -52,9 +82,10 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
         self.assignBackground()
         self.getData(entity: "Chest")
-        var chest = chests[158]
+        chest = chests[158]
         print("Chest: \(chest.chest!) \nType: \(chest.type!)")
-
+        self.getData(entity: "Cycle")
+        self.prevCycle()
     }
 
     override func didReceiveMemoryWarning() {
@@ -96,6 +127,68 @@ class ViewController: UIViewController {
             print(error)
         }
     }
+    
+    func prevCycle() {
+        var image : UIImage
+        cycle = cycles[0]
+        print(cycles.count)
+        if cycle.current != "-1" {
+            if cycles.count > 0 {
+                for i in 1...4 {
+                    if cycles[cycles.count-i].current == "0" {
+                        image = #imageLiteral(resourceName: "SilverChest")
+                    }
+                    else if cycles[cycles.count-i].current == "1" {
+                        image = #imageLiteral(resourceName: "GoldenChest")
+                    }
+                    else if cycles[cycles.count-i].current == "1" {
+                        image = #imageLiteral(resourceName: "GiantChest")
+                    }
+                    else if cycles[cycles.count-i].current == "1" {
+                        image = #imageLiteral(resourceName: "MagicalChest")
+                    }
+                    else if cycles[cycles.count-i].current == "1" {
+                        image = #imageLiteral(resourceName: "SuperMagicalChest")
+                    }
+                    else {
+                        image = #imageLiteral(resourceName: "LegendChest")
+                    }
+                    
+                    if i == 1 {
+                        prevChest1.image = image
+                    }
+                    else if i == 2 {
+                        prevChest2.image = image
+                    }
+                    else if i == 3 {
+                        prevChest3.image = image
+                    }
+                    else {
+                        prevChest4.image = image
+                    }
+                    
+                    if cycles.count == 1 && i == 1 {
+                        prevChest2.image = nil
+                        prevChest3.image = nil
+                        prevChest4.image = nil
+                        break
+                    }
+                    else if cycles.count == 2 && i == 2 {
+                        prevChest3.image = nil
+                        prevChest4.image = nil
+                        break
+                    }
+                    else if cycles.count == 3 && i == 3 {
+                        prevChest4.image = nil
+                        break
+                    }
+                }
+            }
+        }
+    }
+    
+    func addCycle(typeOfChest:String) {
+        
+    }
 
 }
-
