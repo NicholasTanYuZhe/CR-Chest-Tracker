@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "GiantChest.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "Icon-App-60x60@3x-3.png",
       "scale" : "2x"
     },
     {

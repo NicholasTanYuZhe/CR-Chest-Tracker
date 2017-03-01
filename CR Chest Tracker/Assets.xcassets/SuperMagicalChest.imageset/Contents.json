@@ -2,11 +2,11 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "SuperMagicalChest.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
+      "filename" : "Icon-App-60x60@3x-2.png",
       "scale" : "2x"
     },
     {
