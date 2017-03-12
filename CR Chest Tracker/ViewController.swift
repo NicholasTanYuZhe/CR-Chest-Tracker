@@ -136,13 +136,13 @@ class ViewController: UIViewController {
                 else if cycles[cycles.count-i].current == "1" {
                     image = #imageLiteral(resourceName: "GoldenChest")
                 }
-                else if cycles[cycles.count-i].current == "1" {
+                else if cycles[cycles.count-i].current == "2" {
                     image = #imageLiteral(resourceName: "GiantChest")
                 }
-                else if cycles[cycles.count-i].current == "1" {
+                else if cycles[cycles.count-i].current == "3" {
                     image = #imageLiteral(resourceName: "MagicalChest")
                 }
-                else if cycles[cycles.count-i].current == "1" {
+                else if cycles[cycles.count-i].current == "4" {
                     image = #imageLiteral(resourceName: "SuperMagicalChest")
                 }
                 else {
@@ -227,6 +227,35 @@ class ViewController: UIViewController {
             fourP = Double(four)/Double(sum)*100
             fiveP = Double(five)/Double(sum)*100
             
+            if zeroP.isNaN || oneP.isNaN || twoP.isNaN || threeP.isNaN || fourP.isNaN || fiveP.isNaN {
+                let temp = cycles[cycles.count-1].current
+                if percent1.text != "0.00%" && temp == "0" || percent2.text != "0.00%" && temp == "1" || percent3.text != "0.00%" && temp == "2" || percent4.text != "0.00%" && temp == "3" || percent5.text != "0.00%" && temp == "4" || percent6.text != "0.00%" && temp == "5" {
+                    let deleteRequest = NSBatchDeleteRequest(fetchRequest: NSFetchRequest<NSFetchRequestResult>(entityName: "Cycle"))
+                    do {
+                        try context.execute(deleteRequest)
+                    }
+                    catch {
+                        print("Error")
+                    }
+                    self.getData(entity: "Cycle")
+                    let tempCycle = Cycle(context: context)
+                    tempCycle.current = temp
+                    do {
+                        try context.save()
+                    } catch {
+                        let nserror = error as NSError
+                        fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+                    }
+                    self.getData(entity: "Cycle")
+                    zeroP = 100
+                    oneP = 0
+                    twoP = 0
+                    threeP = 0
+                    fourP = 0
+                    fiveP = 0
+                }
+            }
+            
             print("Silver chest percentage: \(zeroP)")
             print("Golden chest percentage: \(oneP)")
             print("Giant chest percentage: \(twoP)")
@@ -305,32 +334,34 @@ class ViewController: UIViewController {
     }
     
     func addCycle(typeOfChest:String) {
-        let temp = Cycle(context: context)
-        if typeOfChest == "Silver" {
-            temp.current = "0"
+        if percent1.text != "nan%" || percent2.text != "nan%" || percent3.text != "nan%" || percent4.text != "nan%" || percent5.text != "nan%" || percent6.text != "nan%" {
+            let temp = Cycle(context: context)
+            if typeOfChest == "Silver" {
+                temp.current = "0"
+            }
+            else if typeOfChest == "Golden" {
+                temp.current = "1"
+            }
+            else if typeOfChest == "Giant" {
+                temp.current = "2"
+            }
+            else if typeOfChest == "Magical" {
+                temp.current = "3"
+            }
+            else if typeOfChest == "SuperMagical" {
+                temp.current = "4"
+            }
+            else if typeOfChest == "Legend" {
+                temp.current = "5"
+            }
+            do {
+                try context.save()
+            } catch {
+                let nserror = error as NSError
+                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+            }
+            self.refresh()
         }
-        else if typeOfChest == "Golden" {
-            temp.current = "1"
-        }
-        else if typeOfChest == "Giant" {
-            temp.current = "2"
-        }
-        else if typeOfChest == "Magical" {
-            temp.current = "3"
-        }
-        else if typeOfChest == "SuperMagical" {
-            temp.current = "4"
-        }
-        else if typeOfChest == "Legend" {
-            temp.current = "5"
-        }
-        do {
-            try context.save()
-        } catch {
-            let nserror = error as NSError
-            fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-        }
-        self.refresh()
     }
     
     func refresh() {
