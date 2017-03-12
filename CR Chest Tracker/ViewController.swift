@@ -22,16 +22,22 @@ class ViewController: UIViewController {
     var image = UIImage()
 
     @IBAction func silver(_ sender: AnyObject) {
+        self.addCycle(typeOfChest: "Silver")
     }
     @IBAction func golden(_ sender: AnyObject) {
+        self.addCycle(typeOfChest: "Golden")
     }
     @IBAction func giant(_ sender: AnyObject) {
+        self.addCycle(typeOfChest: "Giant")
     }
     @IBAction func magical(_ sender: AnyObject) {
+        self.addCycle(typeOfChest: "Magical")
     }
     @IBAction func superMagical(_ sender: AnyObject) {
+        self.addCycle(typeOfChest: "SuperMagical")
     }
     @IBAction func legend(_ sender: AnyObject) {
+        self.addCycle(typeOfChest: "Legend")
     }
     @IBAction func deleteChest(_ sender: AnyObject) {
         if cycles.count > 0 {
@@ -59,6 +65,7 @@ class ViewController: UIViewController {
             else {
                 self.prevCycle()
             }
+            self.refresh()
         }
     }
     @IBOutlet weak var prevChest1: UIImageView!
@@ -298,7 +305,39 @@ class ViewController: UIViewController {
     }
     
     func addCycle(typeOfChest:String) {
-        
+        let temp = Cycle(context: context)
+        if typeOfChest == "Silver" {
+            temp.current = "0"
+        }
+        else if typeOfChest == "Golden" {
+            temp.current = "1"
+        }
+        else if typeOfChest == "Giant" {
+            temp.current = "2"
+        }
+        else if typeOfChest == "Magical" {
+            temp.current = "3"
+        }
+        else if typeOfChest == "SuperMagical" {
+            temp.current = "4"
+        }
+        else if typeOfChest == "Legend" {
+            temp.current = "5"
+        }
+        do {
+            try context.save()
+        } catch {
+            let nserror = error as NSError
+            fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+        }
+        self.refresh()
+    }
+    
+    func refresh() {
+        self.getData(entity: "Cycle")
+        self.calculateNext()
+        self.prevCycle()
+        self.showCycle()
     }
     
     func calculateNext() {
